@@ -20,7 +20,7 @@ interface JobsListProps {
   resumes: { id: string; persona_id: string }[]
   userId: string
 }
-
+// Component to display match score badge with different colors based on score
 function MatchScoreBadge({ score }: { score: number }) {
   if (score <= 0) return null
   const color =
@@ -81,7 +81,7 @@ export function JobsList({ jobs, personas, jobMatches, resumes, userId }: JobsLi
       setApplyingJobId(null)
     }
   }
-
+// Function to calculate match score between a job and a persona based on various criteria
   const calculateMatchScore = (job: Job, persona: Persona): number => {
     let score = 0
     if (persona.career?.specializations && job.skills) {

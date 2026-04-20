@@ -20,7 +20,7 @@ const avatarColors = [
 function getInitials(name: string) {
   return name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
 }
-
+// ตรวจว่า login แล้วหรือยัง
 export default async function PersonasPage() {
   await requireStandardUser()
   const supabase = await createClient()
@@ -32,20 +32,20 @@ export default async function PersonasPage() {
   if (error || !user) {
     redirect("/auth/login")
   }
-
+// ดึงข้อมูล personas และ resumes ของ user นั้นๆ มาแสดง
   const { data: personas } = await supabase
     .from("personas")
     .select("*")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
-
+// ดึงข้อมูล resumes มาเพื่อเช็คว่า persona ไหนมี resume แล้วบ้าง
   const { data: resumes } = await supabase
     .from("resumes")
     .select("id, persona_id, updated_at")
     .eq("user_id", user.id)
     .not("persona_id", "is", null)
     .order("updated_at", { ascending: false })
-
+// สร้าง map ของ persona_id ไปยัง resume_id เพื่อใช้ในการแสดงปุ่ม export
   const resumeByPersonaId = new Map((resumes || []).map((resume) => [resume.persona_id, resume.id]))
 
   return (

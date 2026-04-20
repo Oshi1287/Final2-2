@@ -52,7 +52,7 @@ export default async function ResumesPage() {
   if (error || !user) {
     redirect("/auth/login")
   }
-
+// ดึงข้อมูล resumes ของ user นั้นๆ มาแสดง
   const { data: resumes } = await supabase
     .from("resumes")
     .select("*")

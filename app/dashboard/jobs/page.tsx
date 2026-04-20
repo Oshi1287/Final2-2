@@ -16,7 +16,7 @@ export default async function JobsPage() {
   }
 
   const { data: personas } = await supabase.from("personas").select("*").eq("user_id", user.id).eq("is_active", true)
-
+// ดึงข้อมูล jobs ที่ active อยู่มาแสดง
   const { data: jobs } = await supabase
     .from("jobs")
     .select("*")
